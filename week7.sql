@@ -31,3 +31,31 @@ INSERT INTO Items
   SELECT 'HP', 'Printer', 250 , 650 , 7000 , 35000 , 850000
   
   
+-- Update Price for Dell to 80.00 for Mouse
+SELECT Price, ItemName 
+	FROM Items
+	WHERE ItemName = 'Dell' AND ItemType = 'Mouse';
+
+UPDATE Items
+	SET Price = 80
+	WHERE ItemName = 'Dell'
+	AND ItemType = 'Mouse'
+
+--- Bottom 5 in total yearlysales by ItemType
+SELECT 
+	TOP 5 SUM(YearlySales) as TotalYearSales,
+			ItemName
+	FROM Items
+
+
+--- Retrieve ItemName, AvgMonthlySales, TotalWeeklySales, TotalYearlySales 
+--- AVG MonthlySales between 10000, 20000
+--- TotalWeeklySales between 5000, 25000
+---- TotalYearlySales between 
+SELECT ItemName,
+	AVG(MonthlySales) AS AVGMonthlySales,
+	SUM(WeeklySales) AS TotalYearlySales
+	FROM Items
+	GROUP BY ItemName
+	HAVING AVG(MonthlySales) BETWEEN 10000 AND 20000
+	OR SUM(WeeklySales) BETWEEN 5000 AND 25000;
