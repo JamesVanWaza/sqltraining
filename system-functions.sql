@@ -68,3 +68,90 @@ SELECT
 
 SELECT 
 	DATEDIFF(DD, '01-01-2000', GETDATE());
+
+--ISNumeric
+SELECT 
+	ISNUMERIC(OrganizationLevel), 
+	OrganizationLevel,
+	ISNUMERIC(LoginID), 
+	LoginID
+		FROM HumanResources.Employee;
+
+--ISNULL
+SELECT ISNULL(OrganizationLevel, 100), OrganizationLevel 
+	FROM HumanResources.Employee;
+
+SELECT 
+	ISNULL(Color, 'No Color'), 
+	Color 
+	FROM Production.Product;
+
+-- SELECT FIRST NAME AND LAST NAME FROM Employee Table -- -- Use JamesHomeworkWeek2 --
+SELECT * FROM Employee;
+
+SELECT LEN(EmpName) FROM Employee;
+SELECT CHARINDEX('-', EmpName, 1), EmpName FROM Employee;
+
+SELECT EmpName, LEFT(EmpName, CHARINDEX('-', EmpName, 1) - 1) AS FirstName FROM Employee;
+SELECT EmpName, SUBSTRING(EmpName, CHARINDEX('-', EmpName, 1) + 1, LEN(EmpName)) AS LastName FROM Employee;
+
+-- First and Last Name Combined 
+SELECT 
+	EmpName AS 'Employer Name with Hyphen', 
+	LEFT(EmpName, CHARINDEX('-', EmpName, 1) - 1) AS 'First Name', 
+	SUBSTRING(EmpName, CHARINDEX('-', EmpName, 1) + 1, LEN(EmpName)) AS 'Last Name' 
+		FROM Employee;
+
+-- Use AdventureWorks 2019 Table --
+--- Combine FirstName, MiddleName, LastName ---
+SELECT * FROM Person.Person;
+
+SELECT
+	FirstName + '' AS 'First Name',
+	MiddleName + ''  AS 'Middle Name', 
+	LastName  + '' AS 'Last Name'
+	FROM Person.Person
+	WHERE MiddleName IS NOT NULL;
+
+SELECT CONCAT(FirstName, ' ',  MiddleName, ' ', LastName) AS 'All Names',
+	FirstName AS 'First Name',
+	MiddleName AS 'Middle Name', 
+	LastName AS 'Last Name'
+	FROM Person.Person
+	WHERE MiddleName IS NOT NULL;
+
+SELECT 
+	CHARINDEX('-', 'Amitabh-Bachan-Sir', 1),
+	CHARINDEX('-', 'Amitabh-Bachan-Sir', 9);
+
+--- CAST() --Used as a mistake when there is an error in the datatype. Mostly used to change datatypes --Use JamesHomeworkWeek2 --
+SELECT * FROM Employee;
+SELECT CAST(Hiredate AS DATE)
+	FROM Employee;
+
+--- CONVERT() - Use JamesHomeworkWeek2
+/** https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql?view=sql-server-ver16 */
+SELECT CONVERT(VARCHAR, HireDate, 101) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 102) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 103) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 104) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 105) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 106) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 107) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 108) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 9) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 110) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 111) FROM Employee;
+SELECT CONVERT(VARCHAR, HireDate, 112) FROM Employee;
+
+/** Display Number of OrderIDs for Orders in 2011 -- Use AdventureWorks2019 DB */
+SELECT TOP(25) * FROM Purchasing.PurchaseOrderHeader;
+
+SELECT 
+	COUNT(PurchaseOrderID), 
+	DATEPART(YYYY, OrderDate) 
+		FROM Purchasing.PurchaseOrderHeader
+		WHERE DATEPART(YYYY, OrderDate) = 2011
+		GROUP BY DATEPART(YYYY, OrderDate);
+		
+/** Display Total Number of OrderIDs by year, Sum of SubTotal, AVG of TaxAmt WHERE SUM of TotalDue is > 10000 */
