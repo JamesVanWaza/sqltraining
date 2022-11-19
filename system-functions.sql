@@ -155,3 +155,13 @@ SELECT
 		GROUP BY DATEPART(YYYY, OrderDate);
 		
 /** Display Total Number of OrderIDs by year, Sum of SubTotal, AVG of TaxAmt WHERE SUM of TotalDue is > 10000 */
+SELECT 
+	SUM(PurchaseOrderID) AS TotalOrderID,
+	SUM(SubTotal) AS SubTotal,
+	AVG(TaxAmt) AS 'Tax Amount',
+	DATEPART(YYYY, OrderDate) AS YearOrder,
+	SUM(TotalDue) AS SumTotalDue
+	FROM Purchasing.PurchaseOrderHeader
+	GROUP BY 
+		DATEPART(YYYY, OrderDate)
+	HAVING SUM(TotalDue) > 10000;
